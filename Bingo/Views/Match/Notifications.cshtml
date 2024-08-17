@@ -1,0 +1,144 @@
+﻿@model List<Bingo.Models.Notification>
+@{
+    if (ViewBag.direction == "Received")
+    {
+        ViewBag.Title = "Notifications Received";
+    }
+    else
+    {
+        ViewBag.Title = "Notifications Sent";
+    }
+}
+
+@if (ViewBag.direction == "Received")
+{
+    <h2>Notifications Received</h2>
+}
+else
+{
+    <h2>Notifications Sent</h2>
+}
+
+<table class="table">
+    <tr>
+        <td style="width:50%; text-align:center">
+            <a href="@Url.Action("NotificationsSent", "Match", null)">
+                <span class="glyphicon glyphicon-arrow-up"> Sent</span>
+            </a>
+        </td>
+        <td style="width:50%; text-align:center">
+            <a href="@Url.Action("NotificationsReceived", "Match", null)">
+                <span class="glyphicon glyphicon-arrow-down"> Received</span>
+            </a>
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    <tr>
+        <th style="width:25%;">
+            <span class="glyphicon glyphicon-user" style=" margin-left: 100px;"></span>
+        </th>
+        <th style="width:25%;">
+            Bio
+        </th>
+        <th style="width:25%;">
+            @if (ViewBag.direction == "Received")
+            {
+                <text>Received at</text>
+            }
+            else
+            {
+                <text>Sent at</text>
+            }
+        </th>
+        <th style="width:25%;">
+            Match
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.ProfilePicture != null)
+                {
+                    var base64 = Convert.ToBase64String(item.ProfilePicture);
+                    var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    <div style="background-image:url(@imgsrc);height:75px;width:75px;" class="profile-picture"></div>
+                }
+                else
+                {
+                    <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture"><span class="glyphicon glyphicon-user"></span></div>
+                }
+                <h4>@item.UserName</h4>
+                <h5>
+                    @item.FirstName
+                    @item.LastName
+                </h5>
+            </td>
+            <td>
+                <span style="margin-top: 20px;">@item.Bio</span>
+            </td>
+            <td>
+                <span class="glyphicon glyphicon-time text-muted" style="margin-top: 20px;"> @item.Time</span>
+            </td>
+            <td style="width: 25%">
+                @if (ViewBag.direction == "Received" && item.Result == null)
+                {
+                    <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = true })" style="text-decoration: none; margin-right: 5px;" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-heart"></span>
+                    </a>
+                    <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = false })" style="text-decoration: none;" class="btn btn-success">
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </a>
+                }
+                else if (item.Result == true)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="profile-picture" style="width:50px; height:50px; background-color: darkorange; margin:5px">
+                                    <span class="glyphicon glyphicon-fire" style="color: white; margin:5px; font-size: 40px;"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                It's a Match!
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="btn btn-success btn-sm" href="@Url.Action("ConversationWithContact", "Match", new { contact = item.UserId })">
+                                    Say hi
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else if (item.Result == false)
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="profile-picture" style="width:50px; height:50px; background-color: cadetblue; margin:5px">
+                                    <span class="glyphicon glyphicon-ban-circle" style="color: white; margin:5px; font-size: 40px;"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <br />
+                                Not a Match
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+

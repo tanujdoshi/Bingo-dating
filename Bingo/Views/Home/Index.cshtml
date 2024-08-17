@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+        <div class="jumbotron" style="background-color: #D4E9ED;">
+            <h1 style="color: #D42A48">Bingo</h1>
+            <p class="lead">
+                This is a dating app with the goal of finding you a perfect date. Have fun!
+            <p>
+                <br />
+                @if (Session["UserId"] == null)
+                {
+                    @Html.ActionLink("Create Account", "Signup", "User", null, new { @class = "btn btn-warning btn-lg" })
+                    <text>&nbsp;</text>
+                    @Html.ActionLink("Login", "Login", "User", null, new { @class = "btn btn-success btn-lg" })
+                }
+                else
+                {
+                    @Html.ActionLink("My Account", "Index", "User", null, new { @class = "btn btn-warning btn-lg" })
+                }
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/Content/Bingo_Date.png" alt="Date" width="60%" style="margin-left: 20%" />
+            </div>
+            <div class="col-md-4">
+                <img src="~/Content/Bingo_Bench.png" alt="Sunset" width="100%" />
+            </div>
+            <div class="col-md-4">
+                <img src="~/Content/Bingo_Flowers.png" alt="Flowers" width="40%" style="margin-left: 30%"/>
+            </div>
+        </div>

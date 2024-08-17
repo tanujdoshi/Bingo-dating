@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Bingo.Models.User>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Recommendations for you</h2>
+
+<table class="table">
+    <tr>
+        <th style="width:33%;">
+            <span class="glyphicon glyphicon-user" style=" margin-left: 100px;"></span>
+        </th>
+        <th style="width:33%;">
+            Bio
+        </th>
+        <th style="width:33%;">
+            @Html.DisplayName("Like them")
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @if (item.ProfilePicture != null)
+        {
+            var base64 = Convert.ToBase64String(item.ProfilePicture);
+            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+            <div style="background-image:url(@imgsrc);height:75px;width:75px;" class="profile-picture"></div>
+        }
+        else
+        {
+            <div style="height:45px;width:45px;margin:35px;color:lightgray;" class="profile-picture">
+                <span class="glyphicon glyphicon-picture"></span>
+            </div>
+        }
+        <a href="@Url.Action("Index", "User", new { id = item.UserId })">
+            <h4>@Html.DisplayFor(modelItem => item.UserName)</h4>
+        </a>
+        <h5>
+            @Html.DisplayFor(modelItem => item.FirstName)
+            @Html.DisplayFor(modelItem => item.LastName)
+        </h5>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Bio)
+    </td>
+    <td>
+        <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = true })" style="text-decoration: none; margin-right: 5px;" class="btn btn-danger">
+            <!--<div class="profile-picture" style="width:50px; height:50px; background-color: #fc03b6; margin-top:0">
+                <span class="glyphicon glyphicon-ok-circle" style="color: white; margin:5px; font-size: 40px;"></span>
+            </div>-->
+            <span class="glyphicon glyphicon-heart"></span>
+        </a>
+        <a href="@Url.Action("Send", "Match", new { id = item.UserId, result = false })" style="text-decoration: none;" class="btn btn-success">
+            <!--<div class="profile-picture" style="width:50px; height:50px; background-color: cyan; margin-top:0">
+                <span class="glyphicon glyphicon-remove-circle" style="color: white; margin:5px; font-size: 40px;"></span>
+            </div>-->
+            <span class="glyphicon glyphicon-ban-circle"></span>
+        </a>
+    </td>
+</tr>
+}
+
+</table>

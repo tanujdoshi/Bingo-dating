@@ -1,0 +1,56 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    -webkit-border-radius: 150px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 150px;
+    -moz-background-clip: padding;
+    border-radius: 150px;
+    background-clip: padding-box;
+    margin: 7px 30px 0 5px;
+    float: left;
+    background-position: center center;
+}
+
+
+#messageBody {
+    background-color: lightcyan;
+    height: 70vh;
+    overflow-y: auto;
+}
+ul.chat-list li {
+    padding: 15px 15px;
+    border-radius: 20px;
+    margin: 20px 20px 5px 0px;
+    background-color: #d9d9d9;
+    max-width: 50%;
+}
+ul.chat-list li.right {
+    margin-left: 50%;
+    background-color: #4d9aff;
+}
